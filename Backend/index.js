@@ -5,16 +5,16 @@ const cors = require('cors');
 const  book  = require('./models/Book'); 
 const b = require('./routes/booksRoute')
 const app = express();
+const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost:8080',
-    methods: ['GET','POST','PUT','DELETE'],
-    allowedHeaders: ['Content-Type'],
-}));
-
+app.use(cors());
+app.use(express.static('../frontend'));
+app.get("*",(req,res)=>{
+    res.sendFile("../frontend/index.html")
+}
 app.use('/books',b);
 app.listen(PORT);
 
